@@ -3,6 +3,7 @@ import cors from 'cors';
 import { env } from './config/env';
 import { errorHandler } from './middlewares/errorHandler.middleware';
 import { AppError } from './utils/AppError';
+import apiRoutes from './routes';
 
 const SECURITY_HEADERS: Record<string, string> = {
   'X-Content-Type-Options': 'nosniff',
@@ -38,6 +39,8 @@ export function buildApp(): Application {
   app.get('/health', (_req: Request, res: Response) => {
     res.json({ success: true, message: 'API QUACKROOM activa' });
   });
+
+  app.use('/api', apiRoutes);
 
   app.use((req: Request, _res: Response, next: NextFunction) => {
     next(new AppError(`Ruta no encontrada: ${req.method} ${req.originalUrl}`, 404, { code: 'NOT_FOUND' }));

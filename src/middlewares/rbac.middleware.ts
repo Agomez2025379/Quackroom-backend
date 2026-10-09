@@ -11,7 +11,7 @@ export function authorize(...allowedRoles: Rol[]) {
       return;
     }
 
-    if (!roles.includes(req.user.role)) {
+    if (!roles.includes(req.user.nombre_rol)) {
       next(AppError.forbidden('No tiene permisos para realizar esta acción'));
       return;
     }

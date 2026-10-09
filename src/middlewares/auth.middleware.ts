@@ -6,10 +6,10 @@ import { AppError } from '../utils/AppError';
 import type { JwtPayload } from '../types';
 
 const tokenPayloadSchema = z.object({
-  sub: z.string().min(1),
-  email: z.string().email(),
-  role: z.enum(['administrador', 'beneficiario', 'profesional']),
-  nombre: z.string().optional(),
+  id_usuario: z.number().int().positive(),
+  correo_electronico: z.string().email(),
+  id_rol: z.number().int().positive(),
+  nombre_rol: z.enum(['administrador', 'beneficiario', 'profesional']),
 });
 
 function extractBearerToken(header?: string): string | null {
