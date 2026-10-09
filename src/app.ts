@@ -4,6 +4,8 @@ import { env } from './config/env';
 import { errorHandler } from './middlewares/errorHandler.middleware';
 import { AppError } from './utils/AppError';
 import apiRoutes from './routes';
+import swaggerUi from 'swagger-ui-express';
+import { openApiSpec } from './config/openapi';
 
 const SECURITY_HEADERS: Record<string, string> = {
   'X-Content-Type-Options': 'nosniff',
@@ -40,6 +42,7 @@ export function buildApp(): Application {
     res.json({ success: true, message: 'API QUACKROOM activa' });
   });
 
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(openApiSpec));
   app.use('/api', apiRoutes);
 
   app.use((req: Request, _res: Response, next: NextFunction) => {
