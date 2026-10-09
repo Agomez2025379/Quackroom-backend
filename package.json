@@ -12,11 +12,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "bcrypt"
-    ]
-  },
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
