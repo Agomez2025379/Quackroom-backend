@@ -5,6 +5,7 @@ import { authorize } from '../middlewares/rbac.middleware';
 import { authorizeSelfOrAdmin } from '../middlewares/authorizeSelfOrAdmin.middleware';
 import { validate } from '../middlewares/validate.middleware';
 import {
+  createAdminUserSchema,
   listUsuariosQuerySchema,
   updateUserProfileSchema,
   updateUserStatusSchema,
@@ -14,6 +15,7 @@ const router = Router();
 
 router.use(authenticate);
 
+router.post('/', authorize('administrador'), validate(createAdminUserSchema), usuarioController.crear);
 router.get('/', authorize('administrador'), validate(listUsuariosQuerySchema, 'query'), usuarioController.listar);
 router.get('/:id', authorizeSelfOrAdmin, usuarioController.obtener);
 router.put('/:id', authorizeSelfOrAdmin, validate(updateUserProfileSchema), usuarioController.actualizar);

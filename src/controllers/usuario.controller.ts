@@ -1,7 +1,12 @@
 import type { NextFunction, Request, Response } from 'express';
 import { usuarioService } from '../services/usuario.service';
 import { AppError } from '../utils/AppError';
-import type { ListUsuariosQueryDTO, UpdateUserProfileDTO, UpdateUserStatusDTO } from '../dtos/usuario.dto';
+import type {
+  CreateAdminUserDTO,
+  ListUsuariosQueryDTO,
+  UpdateUserProfileDTO,
+  UpdateUserStatusDTO,
+} from '../dtos/usuario.dto';
 
 function parseId(raw: string | string[] | undefined): number {
   const valor = Array.isArray(raw) ? raw[0] : raw ?? '';
@@ -13,6 +18,19 @@ function parseId(raw: string | string[] | undefined): number {
 }
 
 export const usuarioController = {
+  async crear(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const usuario = await usuarioService.crearPorAdministrador(req.body as CreateAdminUserDTO);
+      res.status(201).json({
+        success: true,
+        message: 'Usuario creado correctamente',
+        data: usuario,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
   async listar(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const resultado = await usuarioService.listar(req.query as unknown as ListUsuariosQueryDTO);

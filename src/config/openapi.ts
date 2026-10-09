@@ -75,6 +75,13 @@ const definition = {
       },
     },
     '/usuarios': {
+      post: {
+        tags: ['Usuarios'],
+        summary: 'Crear usuario (administrador)',
+        security: bearer,
+        requestBody: requestBody('CreateAdminUserDTO'),
+        responses: { '201': response('Usuario creado'), ...errorResponses },
+      },
       get: {
         tags: ['Usuarios'],
         summary: 'Listar usuarios (administrador)',
@@ -325,6 +332,22 @@ const definition = {
       UpdateUserProfileDTO: {
         type: 'object', minProperties: 1,
         properties: { nombre_completo: { type: 'string', maxLength: 150 }, telefono: { type: 'string', nullable: true, maxLength: 20 }, fecha_nacimiento: { type: 'string', format: 'date', nullable: true } },
+      },
+      CreateAdminUserDTO: {
+        type: 'object',
+        required: ['nombre_completo', 'correo_electronico', 'contrasenia', 'nombre_rol'],
+        properties: {
+          nombre_completo: { type: 'string', maxLength: 150 },
+          correo_electronico: { type: 'string', format: 'email', maxLength: 100 },
+          contrasenia: { type: 'string', minLength: 8, maxLength: 72 },
+          nombre_rol: { type: 'string', enum: ['administrador', 'beneficiario', 'profesional'] },
+          telefono: { type: 'string', nullable: true, maxLength: 20 },
+          fecha_nacimiento: { type: 'string', format: 'date', nullable: true },
+          numero_colegiado: { type: 'string', maxLength: 30, description: 'Obligatorio para rol profesional.' },
+          especialidad: { type: 'string', maxLength: 100, description: 'Obligatoria para rol profesional.' },
+          biografia: { type: 'string', nullable: true, maxLength: 2000 },
+          anios_experiencia: { type: 'integer', minimum: 0, description: 'Obligatorio para rol profesional.' },
+        },
       },
       UpdateUserStatusDTO: {
         type: 'object', required: ['estado_cuenta'], properties: { estado_cuenta: { type: 'string', enum: ['activo', 'inactivo', 'suspendido'] } },

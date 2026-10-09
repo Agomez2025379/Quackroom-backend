@@ -93,7 +93,7 @@ La especificacion interactiva esta en `/api/docs`. Los errores usan `{ "success"
 | area | endpoints |
 | --- | --- |
 | autenticacion | `POST /auth/register`, `POST /auth/login`, `GET /auth/me` |
-| usuarios | `GET /usuarios`, `GET /usuarios/:id`, `PUT /usuarios/:id`, `PATCH /usuarios/:id/estado` |
+| usuarios | `GET /usuarios`, `POST /usuarios` (administrador), `GET /usuarios/:id`, `PUT /usuarios/:id`, `PATCH /usuarios/:id/estado` |
 | centros | `GET /centros-atencion`, `GET /centros-atencion/:id`, `POST /centros-atencion`, `PUT /centros-atencion/:id`, `DELETE /centros-atencion/:id` |
 | citas y resenas | `GET /citas`, `GET /citas/:id`, `POST /citas`, `PATCH /citas/:id/estado`, `POST /citas/:id/resena` |
 | diario emocional | `POST /diario-emocional`, `GET /diario-emocional/mi-historial`, `GET /diario-emocional/:id`, `DELETE /diario-emocional/:id` |

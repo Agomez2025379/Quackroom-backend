@@ -154,4 +154,9 @@ export const usuarioRepository = {
     }
     return data ? mapPublic(data as RawUsuario) : null;
   },
+
+  async delete(id: number): Promise<void> {
+    const { error } = await supabase.from(TABLE).delete().eq('id_usuario', id);
+    if (error) throw error;
+  },
 };
